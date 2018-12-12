@@ -2,6 +2,9 @@ package gui;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -14,17 +17,19 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import gui.LeftSide;
 import files.HCalendarDictionnary;
+import files.HCard;
 
 
 
-public class RightSide{
+public class RightSide implements ActionListener{
 	
-		LeftSide left;
+		static LeftSide left;
 		static JSplitPane splitPane;
 		JPanel Pane; 
 		static JFrame window;
 		JPanel globalpane;
 		JPanel pane;
+		static File file;
 		
 		JButton buttonmod;
 		JButton buttonser;		
@@ -97,6 +102,7 @@ public class RightSide{
 		
 		public static void main(String args[]) {
 			
+			
 			RightSide right = new RightSide();
 			window.setTitle("Ma fenetre");
 			window.setLocationRelativeTo(null);
@@ -104,6 +110,38 @@ public class RightSide{
 			window.pack();
 			window.setResizable(false);
 			window.setVisible(true);
+						
+			
+			 ActionListener actionListener = new ActionListener() {
+			      public void actionPerformed(ActionEvent actionEvent) {
+			        JFileChooser theFileChooser = (JFileChooser) actionEvent.getSource();
+			        String command = actionEvent.getActionCommand();
+			        if (command.equals(JFileChooser.APPROVE_SELECTION)) {
+			          File selectedFile = theFileChooser.getSelectedFile();
+			          System.out.println(selectedFile.getParent());
+			          
+			          System.out.println(selectedFile.getName());
+			          
+			          HCard card = new HCard(selectedFile);
+			          left.getTextarea().append(card.toString());
+			          System.out.println(card.toString());
+			          
+			        } else if (command.equals(JFileChooser.CANCEL_SELECTION)) {
+			          System.out.println(JFileChooser.CANCEL_SELECTION);
+			        }
+			      }
+			    };
+			    left.getFileChooser().addActionListener(actionListener);
+			    
+			    //left.getTextarea().append(Card.toString()));
+			    
+		}
 		
-	}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		
 }

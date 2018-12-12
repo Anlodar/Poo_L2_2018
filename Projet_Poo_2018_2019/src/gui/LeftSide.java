@@ -1,5 +1,7 @@
 package gui;
 
+import java.io.File;
+
 import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -29,9 +31,7 @@ public class LeftSide {
 		fc.setFileSelectionMode(0);
 		fc.setFileFilter(filter1);
 		fc.setFileFilter(filterICS);
-		
-		textarea.append("Test1"+"\n");
-		textarea.append("Test2"+"\n");
+				
 		textarea.setEditable(false);
 
 		splitgauche.setDividerSize(0);
@@ -40,5 +40,18 @@ public class LeftSide {
 	public JSplitPane getSplitGauche() {
 		return splitgauche;
 	}
+	
+	public File FileChoosed(JFileChooser fc) {
 		
+		return fc.getSelectedFile();
+	}
+	
+	public JFileChooser getFileChooser() {
+		
+		return fc;
+	}
+	
+	public JTextArea getTextarea() {
+		return textarea;
+	}
 }
