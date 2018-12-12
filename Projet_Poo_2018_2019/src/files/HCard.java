@@ -358,8 +358,8 @@ public class HCard implements java.io.Serializable {
 	 */
 	@Override
 	public String toString() {
-		return name + " \n Address Work: " + adressWork + " \n Address Home: " + adressHome + "\n Number Work: "
-				+ numberWork + " \n Number Home: " + numberHome + " \n Mail:" + mail;
+		return name + "Address Work: " + adressWork + "Address Home: " + adressHome + "Number Work: "
+				+ numberWork + "Number Home: " + numberHome + "Mail:" + mail;
 	}
 	
 	/**
