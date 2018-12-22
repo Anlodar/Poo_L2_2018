@@ -63,22 +63,17 @@ public class HEventTry implements java.io.Serializable {
 	 * @see HEventTry#initParameter(BufferedReader, String)
 	 * @see BufferedReader
 	 */
-	public HEventTry(File file) throws NullPointerException {
-		BufferedReader bf=null;
+	public HEventTry(String[] str) throws NullPointerException {
 		try {
-			bf = new BufferedReader(new FileReader(file));
-			System.out.println("reader sur fichier de merde cree");
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			while (bf.readLine()!=null) {
-				summary=initParameter(bf.readLine(), "SUMMARY:");
-				location=initParameter(bf.readLine(), "LOCATION:");
-				dateStart=initParameter(bf.readLine(), "DTSTART;");
-				dateEnd=initParameter(bf.readLine(), "DTEND;");
-				url=initParameter(bf.readLine(), "URL:");
+			int i = 0;
+			for(i = 0; i<= str.length; i++) {
+				System.out.println("COUCOU TA MEReQIFJOSF,F,Q,FPQEF,PF,OE,F");
+
+				summary=initParameter(str[i], "SUMMARY:");
+				location=initParameter(str[i], "LOCATION:");
+				dateStart=initParameter(str[i], "DTSTART;");
+				dateEnd=initParameter(str[i], "DTEND;");
+				url=initParameter(str[i], "URL:");
 				System.out.println("parametres crees");
 			}
 		}catch (IOException e) {
@@ -104,10 +99,13 @@ public class HEventTry implements java.io.Serializable {
 
 		//try {
 			//while(bf.readLine()!= "END:VEVENT") {
+		System.out.println(line);
+
 		if(separator.startsWith("D")) {
 			//try {
 				if (line.startsWith(separator)) {
 					parameterArray = line.split(separator);
+					//System.out.println("parameterArray = " + parameterArray);
 					for (i = 0; i < parameterArray.length; i++) {
 						parameter += parameterArray[i] + " \n";
 					}
@@ -267,7 +265,7 @@ public class HEventTry implements java.io.Serializable {
 	 */
 	@Override
 	public String toString() {
-		return summary + "\n Debute le:" + dateStart + "\n Fini le:" + dateEnd + "\n A:" + location + "\n " + url + "\n\n";
+		return summary + "\n Debute le : " + dateStart + "\n Fini le : " + dateEnd + "\n A : " + location + "\n @ : " + url + "\n\n";
 	}
 
 }

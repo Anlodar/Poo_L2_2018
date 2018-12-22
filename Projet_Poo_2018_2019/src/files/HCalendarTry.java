@@ -9,7 +9,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * @author Yael
@@ -26,9 +28,7 @@ public class HCalendarTry {
 	
 	public void create(File vCalendar) {
 		BufferedReader reader = null;
-		FileWriter writer = null;
-		String str = null;
-		File file = new File("burnafterusing.txt");
+		String str[] = new String[50];
 		
 		try {
 			reader = new BufferedReader(new FileReader(vCalendar));
@@ -38,33 +38,30 @@ public class HCalendarTry {
 			e1.printStackTrace();
 		}
 		
-		try {
-			writer = new FileWriter(file);
-			System.out.println("writer sur fichier de merde cree");
-		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
 		
 		try {
-			while(reader.readLine() != null) {
-				if (reader.readLine().equals("END:VEVENT") == false) {
+			String line = reader.readLine();
+			int i = 0;
+			while(line != null) {
+				//if (reader.readLine().equals("END:VEVENT") == false) {
+				if (Objects.equals(line, "END:VEVENT") == false) {
 					System.out.println("creation du string");
-						str += reader.readLine();
-						
+						str[i] = line + " \n";
+						line = reader.readLine();
+						i++;
 					}
 				else {
-					writer.write(str);
-					System.out.println("ecriture dans fichier de merde");
-					calendar.add(new HEventTry(file));
+					System.out.println(str);
+					
+					calendar.add(new HEventTry(str));
 					System.out.println("ajout dun event");
-					str = "";
+					i = 0;
+					line = reader.readLine();
 				}
 				
 			}
 			reader.close();
-			writer.close();
-		}catch (IOException e3) {
+		}catch (NullPointerException | IOException e3) {
 			// TODO Auto-generated catch block
 			e3.printStackTrace();
 		}
