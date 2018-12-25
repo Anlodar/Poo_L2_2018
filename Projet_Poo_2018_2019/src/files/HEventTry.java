@@ -48,12 +48,12 @@ public class HEventTry implements java.io.Serializable {
 	private String location;
 	
 	/**
-	 * URL of the event. This field can be changed.
+	 * Description of the event. This field can be changed.
 	 * @see HEventTry#getUrl()
 	 * @see HEventTry#setUrl(String)
 	 * 
 	 */
-	private String url; 
+	private String description; 
 
 	/**
 	 * 	Constructor HEvent
@@ -63,20 +63,23 @@ public class HEventTry implements java.io.Serializable {
 	 * @see HEventTry#initParameter(BufferedReader, String)
 	 * @see BufferedReader
 	 */
-	public HEventTry(String[] str) throws NullPointerException {
+	public HEventTry(String[] str){
+		summary = dateEnd = dateStart = location = description = "";
 		try {
-			int i = 0;
-			for(i = 0; i<= str.length; i++) {
+			//summary = dateEnd = dateStart = location = description = "";
+			System.out.println(description+ dateEnd + dateStart + location + summary + "num 1*********************");
+			for(String line: str) {
+			if(line != null && (line.isEmpty() == false)) {
 				System.out.println("COUCOU TA MEReQIFJOSF,F,Q,FPQEF,PF,OE,F");
-
-				summary=initParameter(str[i], "SUMMARY:");
-				location=initParameter(str[i], "LOCATION:");
-				dateStart=initParameter(str[i], "DTSTART;");
-				dateEnd=initParameter(str[i], "DTEND;");
-				url=initParameter(str[i], "URL:");
-				System.out.println("parametres crees");
-			}
-		}catch (IOException e) {
+				//System.out.println(description+ dateEnd + dateStart + location + summary + "num 1*********************");
+				summary+=initParameter(line, "SUMMARY:");
+				location+=initParameter(line, "LOCATION:");
+				dateStart+=initParameter(line, "DTSTART;");
+				dateEnd+=initParameter(line, "DTEND;");
+				description+=initParameter(line, "DESCRIPTION:");
+				//System.out.println(description+ dateEnd + dateStart + location + summary + "num 2*********************");}
+			}}System.out.println("*********PARAMETRE FINAUX DE LEVENT ====" + summary + dateEnd + dateStart + location + description);
+		}catch (NullPointerException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -97,17 +100,14 @@ public class HEventTry implements java.io.Serializable {
 		char[] dateArray = {};
 		int i = 0;
 
-		//try {
-			//while(bf.readLine()!= "END:VEVENT") {
+
 		System.out.println(line);
 
-		if(separator.startsWith("D")) {
-			//try {
-				if (line.startsWith(separator)) {
+			if(line.startsWith(separator)) {
+				if (separator.startsWith("DT")) {
 					parameterArray = line.split(separator);
-					//System.out.println("parameterArray = " + parameterArray);
 					for (i = 0; i < parameterArray.length; i++) {
-						parameter += parameterArray[i] + " \n";
+						parameter += parameterArray[i];
 					}
 					dateArray = parameter.toCharArray();
 					dateArray[10] = dateArray[8];
@@ -116,36 +116,17 @@ public class HEventTry implements java.io.Serializable {
 					dateArray[7] = dateArray[6];
 					dateArray[6] = dateArray[5];
 					dateArray[5] = '-';
-					parameter = new String(dateArray) + " \n";						
+					parameter = new String(dateArray);// + " \n";	
 				}
-			/*} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
-
-		} 
-
-		else {
-			//try {
-				if (line.startsWith(separator)) {
+				else {
 					parameterArray = line.split(separator);
 					for (i = 0; i < parameterArray.length; i++) {
 						parameter += parameterArray[i];
 					}
-					parameter += " \n";
+					//parameter += " \n";
 				}
-			/*} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
-		}
-			/*}} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-
-
-		return parameter;
+			} 
+		System.out.println("*****PARAMETRE CREE === "+ parameter);return parameter;
 
 	}
 
@@ -224,19 +205,19 @@ public class HEventTry implements java.io.Serializable {
 	}
 
 	/**
-	 * @return the url
+	 * @return the description
 	 */
-	public String getUrl() {
-		return url;
+	public String getDescription() {
+		return description;
 	}
 
 	/**
-	 * @param url the url to set
+	 * @param url the description to set
 	 * @see HEventTry#url
 	 * 
 	 */
-	public void setUrl(String url) {
-		this.url = url;
+	public void setUrl(String description) {
+		this.description = description;
 	}
 
 /**
@@ -251,7 +232,7 @@ public class HEventTry implements java.io.Serializable {
  */
 	public String toHtmlEvent() {
 		return "<div class=\\\"vevent\\\">  \n \t"
-				+ "<a class=\\\"url\\\" href=\\\"" + getUrl() + "\\\"></a> \n \t"
+				+ "<span class=\\\"description\\\">" + getDescription() + "</span> \n \t"
 				+ "<span class=\\\"summary\\\">" + getSummary() + "</span> \n \t"
 				+ "<abbr class=\\\"dtstart\\\">" + getDateStart() + "</abbr>- \n \t"
 				+ "<abbr class=\\\"dtend\\\">" + getDateEnd() + "</abbr>, at the  \n \t"
@@ -265,7 +246,7 @@ public class HEventTry implements java.io.Serializable {
 	 */
 	@Override
 	public String toString() {
-		return summary + "\n Debute le : " + dateStart + "\n Fini le : " + dateEnd + "\n A : " + location + "\n @ : " + url + "\n\n";
+		return summary + " : " + description + "\n Debute le : " + dateStart + "\n Fini le : " + dateEnd + "\n A : " + location + "\n\n";
 	}
 
 }

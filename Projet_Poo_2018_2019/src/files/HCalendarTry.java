@@ -28,11 +28,10 @@ public class HCalendarTry {
 	
 	public void create(File vCalendar) {
 		BufferedReader reader = null;
-		String str[] = new String[50];
+		String str[] = new String[30];
 		
 		try {
 			reader = new BufferedReader(new FileReader(vCalendar));
-			System.out.println("reader sur ics cree");
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -42,11 +41,11 @@ public class HCalendarTry {
 		try {
 			String line = reader.readLine();
 			int i = 0;
+			for(String s : str) { s = "";}
 			while(line != null) {
-				//if (reader.readLine().equals("END:VEVENT") == false) {
 				if (Objects.equals(line, "END:VEVENT") == false) {
 					System.out.println("creation du string");
-						str[i] = line + " \n";
+						str[i] = line;
 						line = reader.readLine();
 						i++;
 					}
