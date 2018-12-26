@@ -28,7 +28,7 @@ import files.HEventTry;
  *
  */
 public class Gui implements ActionListener{
-	
+
 	// Name All Variable used in Gui //
 	private File file;
 	private static JFrame window;
@@ -44,27 +44,27 @@ public class Gui implements ActionListener{
 	private HCalendar calendar;
 	static JSplitPane splitPane;
 	private String type;
-	
+
 	private JPanel globalpane;
 	private JPanel JTextpane;
 	private JButton buttonmod;
 	private JButton buttonser;		
 	private JButton buttonhtml;
-			
+
 	private JComboBox<String> box;
 	private String[] event;
 	private String oldname;
-	
+
 	private JTextField name;
 	private JTextField number;
 	private JTextField mail;
 	private JTextField adressWork;
 	private JTextField numberWork;
 	private JTextField adressHome;
-	
+
 	/**
 	 * Constructor Gui
-	 * <p> When an object is builded, initialize parameter wait the action to be done
+	 * <p> When an object is builded, initialize parameter and wait the action to be done</p>
 	 * 
 	 * @see JTextField#setMaximumSize(Dimension)
 	 * @see JTextArea#setEditable(boolean)
@@ -76,24 +76,24 @@ public class Gui implements ActionListener{
 	 * @see JSplitPane#setDividerSize(int)
 	 */
 	public Gui() {
-		
+
 		// Initialize Panel And TextArea //
 		globalpane = new JPanel();
 		JTextpane = new JPanel();
 		buttonpane = new JPanel();
 		textarea = new JTextArea(20,70);
-		
+
 		// Initialize FileChooser and its Filter //
 		fc = new JFileChooser();
 		filterVCF = new FileNameExtensionFilter("VCF File", "vcf");
 		filterICS = new FileNameExtensionFilter("ICS File", "ics");
-		
+
 		// Initialize Buttons //
 		buttonmod = new JButton("Modifier");
 		buttonser = new JButton("Serialiser");		
 		buttonhtml = new JButton("HTML");
 		openbutton = new JButton("Open File ...");
-		
+
 		// Initialize JTextField //
 		name = new JTextField("Name");
 		number = new JTextField("Number Home");
@@ -101,26 +101,26 @@ public class Gui implements ActionListener{
 		adressWork= new JTextField("Adress Work");
 		numberWork = new JTextField("Number Work");
 		adressHome = new JTextField("Adress Home");
-		
+
 		// Initialize the ComboBox and the scrollPane who contains the textarea //
 		box = new JComboBox();
 		scroll = new JScrollPane(textarea);
-		
+
 		// Initialize Box layouts for JTextpane and globalpane //
 		BoxLayout Box1 = new BoxLayout(JTextpane, 1);
 		BoxLayout Box2 = new BoxLayout(globalpane,1);
-		
+
 		// Disable the Editable on textarea and set Filter on FileChooser //
 		textarea.setEditable(false);
 		fc.setFileSelectionMode(0);
 		fc.setFileFilter(filterVCF);
 		fc.setFileFilter(filterICS);
-		
+
 		// Add ActionListener on object //
 		openbutton.addActionListener(this);
 		buttonmod.addActionListener(this);
 		box.addActionListener(this);
-		
+
 		// Set the Size of JTextFields //
 		name.setMaximumSize( new Dimension(250,20));
 		number.setMaximumSize( new Dimension(250,20));
@@ -128,10 +128,10 @@ public class Gui implements ActionListener{
 		mail.setMaximumSize( new Dimension(250,20));
 		adressHome.setMaximumSize( new Dimension(250,20));
 		adressWork.setMaximumSize( new Dimension(250,20));
-		
+
 		// Add elements to corresponding Panel //
 		JTextpane.add(box);
-    	JTextpane.add(name);
+		JTextpane.add(name);
 		JTextpane.add(number);
 		JTextpane.add(numberWork);
 		JTextpane.add(mail);
@@ -140,15 +140,15 @@ public class Gui implements ActionListener{
 		buttonpane.add(buttonmod);
 		buttonpane.add(buttonser);
 		buttonpane.add(buttonhtml);
-		
+
 		// Set Layout on these panel //
 		JTextpane.setLayout(Box1);
 		globalpane.setLayout(Box2);
-		
+
 		// Add the Two panel into a global one //
 		globalpane.add(JTextpane);
 		globalpane.add(buttonpane);
-		
+
 		// Initialize the splitPane in the left part, fill it with a button and a scrollPane and set the divider size to 0 to lock it //
 		splitgauche = new JSplitPane(JSplitPane.VERTICAL_SPLIT, openbutton, scroll);
 		splitgauche.setDividerSize(0);
@@ -203,115 +203,115 @@ public class Gui implements ActionListener{
 	 * @see HCard#toHtml() 
 	 */
 	public void actionPerformed(ActionEvent e) {
-        //Handle openbutton action.
-        if (e.getSource() == openbutton) {
-            int returnVal = fc.showOpenDialog(splitgauche);
+		//Handle openbutton action.
+		if (e.getSource() == openbutton) {
+			int returnVal = fc.showOpenDialog(splitgauche);
 
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                file = fc.getSelectedFile();
-                type = getType(file);
-               // Case where the file choosed is a Vcard //
-               if (type.equals(".vcf")) {
-                	card = new HCard(file);
-                	textarea.setText("");
-                	textarea.append(card.toString());
-                	
-                	box.removeAllItems();
-                	
-                	// Set the current Variable in the JTextFields //
-                	name.setText(card.getName());
-                	number.setText(card.getNumberHome());
-                	numberWork.setText(card.getNumberWork());
-                	mail.setText(card.getMail());
-                	adressHome.setText(card.getMail());
-            		adressWork.setText(card.getAdressWork());
-            		adressWork.setEditable(true);
-               }
-               //Handle the case where the file choosed is a VCalendar //
-               else if(type.equals(".ics")) {
-            	   
-	               	calendar = new HCalendar(file);
-	               	textarea.setText("");
-	               	textarea.append(calendar.toString());
-	               	
-	               	event = calendar.getAllSummaries();
-	               	
-	               	for(int i=0; i < event.length; i++) {
-	               		if(event[i] != null) {
-	               		box.addItem(event[i]);
-	               		}
-	               	}
-	               	
-	               	// Set the current variable in JTextFields
-	               	oldname = calendar.searchEvent(box.getSelectedItem().toString()).getSummary();
-	               	name.setText(oldname);
-		           	number.setText(calendar.searchEvent(box.getSelectedItem().toString()).getDescription());
-		           	numberWork.setText(calendar.searchEvent(box.getSelectedItem().toString()).getDateStart());
-		           	mail.setText(calendar.searchEvent(box.getSelectedItem().toString()).getDateEnd());
-		           	adressHome.setText(calendar.searchEvent(box.getSelectedItem().toString()).getLocation());
-		       		adressWork.setText("");
-		       		adressWork.setEditable(false);
-              }
-           }
-       }
-        // Handle buttonmod action //
-        else if(e.getSource() == buttonmod) {
-        	// Case where the file choosed is a VCard //
-        	if(type.equals(".vcf")) {
-       				card.modify(name.getText(), adressHome.getText(), adressWork.getText(), number.getText(), numberWork.getText(), mail.getText());
-       				textarea.setText("");
-       				textarea.append(card.toString());
-        	}
-        	// Case where the file choosed is a VCalendar //
-        	else if(type.equals(".ics")) {
-        		calendar.modify(oldname, name.getText(), numberWork.getText(), mail.getText(), adressHome.getText(), number.getText());
-        		textarea.setText("");
-        		textarea.append(calendar.toString());
-        	}
-        }
-        // Handle buttonser action //
-       	else if(e.getSource() == buttonser) {
-       			// Case where the file choosed is a VCard //
-       			if(type.equals(".vcf")) {
-       				
-       			}
-       			// Case where the file choosed is a VCalendar //
-       			else if(type.equals(".ics")) {
-       				
-       			}
-       	}
-        // Handle buttonhtml action //
-       	else if(e.getSource() == buttonhtml) {
-        	// Case where the file choosed is a VCard //
-       		if(type.equals(".vcf")) {
-       			card.toHtml();
-       		}
-        	// Case where the file choosed is a VCalendar //
-       		else if(type.equals(".ics")) {
-       			calendar.toHtmlCalendar();
-       		}
-       	}
-        // Handle the JComboBox choice of Event //
-       	else if (e.getSource() == box) {
-       		if(type.equals(".ics")) {
-       			
-       			oldname = calendar.searchEvent(box.getSelectedItem().toString()).getSummary();
-	       		name.setText(oldname);
-	           	number.setText(calendar.searchEvent(box.getSelectedItem().toString()).getDescription());
-	           	numberWork.setText(calendar.searchEvent(box.getSelectedItem().toString()).getDateStart());
-	           	mail.setText(calendar.searchEvent(box.getSelectedItem().toString()).getDateEnd());
-	           	adressHome.setText(calendar.searchEvent(box.getSelectedItem().toString()).getLocation());
-	       		adressWork.setText("");
-	       		adressWork.setEditable(false);
-       		}
-       	}
-              
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				file = fc.getSelectedFile();
+				type = getType(file);
+				// Case where the file choosed is a Vcard //
+				if (type.equals(".vcf")) {
+					card = new HCard(file);
+					textarea.setText("");
+					textarea.append(card.toString());
+
+					box.removeAllItems();
+
+					// Set the current Variable in the JTextFields //
+					name.setText(card.getName());
+					number.setText(card.getNumberHome());
+					numberWork.setText(card.getNumberWork());
+					mail.setText(card.getMail());
+					adressHome.setText(card.getMail());
+					adressWork.setText(card.getAdressWork());
+					adressWork.setEditable(true);
+				}
+				//Handle the case where the file choosed is a VCalendar //
+				else if(type.equals(".ics")) {
+
+					calendar = new HCalendar(file);
+					textarea.setText("");
+					textarea.append(calendar.toString());
+
+					event = calendar.getAllSummaries();
+
+					for(int i=0; i < event.length; i++) {
+						if(event[i] != null) {
+							box.addItem(event[i]);
+						}
+					}
+
+					// Set the current variable in JTextFields
+					oldname = calendar.searchEvent(box.getSelectedItem().toString()).getSummary();
+					name.setText(oldname);
+					number.setText(calendar.searchEvent(box.getSelectedItem().toString()).getDescription());
+					numberWork.setText(calendar.searchEvent(box.getSelectedItem().toString()).getDateStart());
+					mail.setText(calendar.searchEvent(box.getSelectedItem().toString()).getDateEnd());
+					adressHome.setText(calendar.searchEvent(box.getSelectedItem().toString()).getLocation());
+					adressWork.setText("");
+					adressWork.setEditable(false);
+				}
+			}
+		}
+		// Handle buttonmod action //
+		else if(e.getSource() == buttonmod) {
+			// Case where the file choosed is a VCard //
+			if(type.equals(".vcf")) {
+				card.modify(name.getText(), adressHome.getText(), adressWork.getText(), number.getText(), numberWork.getText(), mail.getText());
+				textarea.setText("");
+				textarea.append(card.toString());
+			}
+			// Case where the file choosed is a VCalendar //
+			else if(type.equals(".ics")) {
+				calendar.modify(oldname, name.getText(), numberWork.getText(), mail.getText(), adressHome.getText(), number.getText());
+				textarea.setText("");
+				textarea.append(calendar.toString());
+			}
+		}
+		// Handle buttonser action //
+		else if(e.getSource() == buttonser) {
+			// Case where the file choosed is a VCard //
+			if(type.equals(".vcf")) {
+
+			}
+			// Case where the file choosed is a VCalendar //
+			else if(type.equals(".ics")) {
+
+			}
+		}
+		// Handle buttonhtml action //
+		else if(e.getSource() == buttonhtml) {
+			// Case where the file choosed is a VCard //
+			if(type.equals(".vcf")) {
+				card.toHtml();
+			}
+			// Case where the file choosed is a VCalendar //
+			else if(type.equals(".ics")) {
+				calendar.toHtmlCalendar();
+			}
+		}
+		// Handle the JComboBox choice of Event //
+		else if (e.getSource() == box) {
+			if(type.equals(".ics")) {
+
+				oldname = calendar.searchEvent(box.getSelectedItem().toString()).getSummary();
+				name.setText(oldname);
+				number.setText(calendar.searchEvent(box.getSelectedItem().toString()).getDescription());
+				numberWork.setText(calendar.searchEvent(box.getSelectedItem().toString()).getDateStart());
+				mail.setText(calendar.searchEvent(box.getSelectedItem().toString()).getDateEnd());
+				adressHome.setText(calendar.searchEvent(box.getSelectedItem().toString()).getLocation());
+				adressWork.setText("");
+				adressWork.setEditable(false);
+			}
+		}
+
 	}
 	/** 
 	 * @return splitgauche the left part of the GUI
 	 */
 	public JSplitPane getSplitGauche() {
-		
+
 		return splitgauche;
 	}
 	/**
@@ -322,14 +322,14 @@ public class Gui implements ActionListener{
 	}
 
 	public static void main(String[] args) {
-			
-			Gui gui =new Gui();
-			window = new JFrame();
-			window.setTitle("Ma fenetre");
-			window.setLocationRelativeTo(null);
-			window.add(gui.getSplitPane());
-			window.pack();
-			window.setResizable(true);
-			window.setVisible(true);
+
+		Gui gui =new Gui();
+		window = new JFrame();
+		window.setTitle("Ma fenetre");
+		window.setLocationRelativeTo(null);
+		window.add(gui.getSplitPane());
+		window.pack();
+		window.setResizable(true);
+		window.setVisible(true);
 	}
 }
