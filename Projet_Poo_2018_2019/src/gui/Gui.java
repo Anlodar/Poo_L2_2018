@@ -20,7 +20,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import files.HCalendar;
 import files.HCard;
-import files.HEventTry;
+import files.HEvent;
 
 /**
  * 
@@ -284,11 +284,11 @@ public class Gui implements ActionListener{
 		else if(e.getSource() == buttonhtml) {
 			// Case where the file choosed is a VCard //
 			if(type.equals(".vcf")) {
-				card.toHtml();
+				card.toHtml(card.getName().replaceAll(" ", "") + ".html");
 			}
 			// Case where the file choosed is a VCalendar //
 			else if(type.equals(".ics")) {
-				calendar.toHtmlCalendar();
+				calendar.toHtmlCalendar("calendar.html");
 			}
 		}
 		// Handle the JComboBox choice of Event //
