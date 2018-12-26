@@ -68,7 +68,6 @@ public class HEventTry implements java.io.Serializable {
 		try {
 			for(String line: str) {
 				if(line != null && (line.isEmpty() == false)) {
-					System.out.println("COUCOU TA MEReQIFJOSF,F,Q,FPQEF,PF,OE,F");
 					summary+=initParameter(line, "SUMMARY:");
 					location+=initParameter(line, "LOCATION:");
 					dateStart+=initParameter(line, "DTSTART;");
@@ -108,8 +107,6 @@ public HEventTry(String summary, String dateStart, String dateEnd, String locati
 		int i = 0;
 
 
-		System.out.println(line);
-
 			if(line.startsWith(separator)) {
 				if (separator.startsWith("DT")) {
 					parameterArray = line.split(separator);
@@ -130,10 +127,9 @@ public HEventTry(String summary, String dateStart, String dateEnd, String locati
 					for (i = 0; i < parameterArray.length; i++) {
 						parameter += parameterArray[i];
 					}
-					//parameter += " \n";
 				}
 			} 
-		System.out.println("*****PARAMETRE CREE === "+ parameter);return parameter;
+		return parameter;
 
 	}
 
