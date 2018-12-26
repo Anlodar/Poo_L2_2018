@@ -152,12 +152,12 @@ public class HCalendar {
 	 * @see FileReader
 	 * @see IOException
 	 */
-	public void toHtmlCalendar() {
-		File fileName = new File("././calendar.html");
+	public void toHtmlCalendar(String fileName) {
+		File file = new File(fileName);
 		FileWriter writer = null;
 		String str = "<div class=\\\"vcalendar\\\">  \n";
 		try {
-			writer = new FileWriter(fileName);
+			writer = new FileWriter(file);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
