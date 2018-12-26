@@ -14,7 +14,7 @@ import java.io.IOException;
  *
  */
 public class HEventTry implements java.io.Serializable {
-	
+
 	/**
 	 * Start date of the event. This field can be changed.
 	 * @see HEventTry#getDateStart()
@@ -22,7 +22,7 @@ public class HEventTry implements java.io.Serializable {
 	 * 
 	 */
 	private String dateStart;
-	
+
 	/**
 	 * End date of the event. This field can be changed.
 	 * @see HEventTry#getDateEnd()
@@ -30,7 +30,7 @@ public class HEventTry implements java.io.Serializable {
 	 * 
 	 */
 	private String dateEnd;
-	
+
 	/**
 	 * Summary of the event. This field can be changed.
 	 * @see HEventTry#getSummary()
@@ -38,7 +38,7 @@ public class HEventTry implements java.io.Serializable {
 	 * 
 	 */
 	private String summary;
-	
+
 	/**
 	 * Location of the event. This field can be changed.
 	 * @see HEventTry#getLocation()
@@ -46,22 +46,21 @@ public class HEventTry implements java.io.Serializable {
 	 * 
 	 */
 	private String location;
-	
+
 	/**
 	 * Description of the event. This field can be changed.
-	 * @see HEventTry#getUrl()
-	 * @see HEventTry#setUrl(String)
+	 * @see HEventTry#getDescription()
+	 * @see HEventTry#setDescrition(String)
 	 * 
 	 */
 	private String description; 
 
 	/**
 	 * 	Constructor HEvent
-	 * <p>When an object is builded, all fields are initialized by using a combination of initParemeter method and cleanString method.</p> 
-	 * @param bf a BufferedReader from which the fields are initialized 
-	 * @see HEventTry#cleanString(String)
-	 * @see HEventTry#initParameter(BufferedReader, String)
-	 * @see BufferedReader
+	 * <p>When an object is builded with this constructor, all fields are initialized as an empty String. 
+	 * Then, using initParemeter() and a array of string, the fields and the content they have to get are concatenate.</p> 
+	 * @param str a String array containing lines of a ics file event 
+	 * @see HEventTry#initParameter(String, String)
 	 */
 	public HEventTry(String[] str){
 		summary = dateEnd = dateStart = location = description = "";
@@ -81,68 +80,70 @@ public class HEventTry implements java.io.Serializable {
 		}
 	}
 
-
-public HEventTry(String summary, String dateStart, String dateEnd, String location, String description) {
-	setDateEnd(dateEnd);
-	setDateStart(dateStart);
-	setLocation(location);
-	setSummary(summary);
-	setDescription(description);
+	/**
+	 * 	Constructor HEvent
+	 * <p>When an object is builded with this constructor, the fields are initialized from five Strings given in parameter.</p> 
+	 * @param summary the summary from which the object is build
+	 * @param dateStart the dateStart from which the object is build
+	 * @param dateEnd the dateEnd from which the object is build
+	 * @param location the location from which the object is build
+	 * @param description the description from which the object is build
+	 * @see HEventTry#setDateEnd(String)
+	 * @see HEventTry#setDateStart(String)
+	 * @see HEventTry#setDescription(String)
+	 * @see HEventTry#setLocation(String)
+	 * @see HEventTry#setSummary(String)
+	 */
+	public HEventTry(String summary, String dateStart, String dateEnd, String location, String description) {
+		setDateEnd(dateEnd);
+		setDateStart(dateStart);
+		setLocation(location);
+		setSummary(summary);
+		setDescription(description);
 		// TODO Auto-generated constructor stub
 	}
 
 
-/**
- * Return a String to initialize a field
- * @param bf the BufferedReader from which the String is created 
- * @param separator the tag indicating the field to initialize
- * @return a String to initialize a field
- * @throws IOException 
- * @see BufferedReader
- */
+	/**
+	 * Return a String to initialized a field
+	 * @param line a line of the ics file
+	 * @param separator the tag indicating if it's the line to use to initialize the field
+	 * @return a String to initialize a field
+	 * @throws NullPointerException
+	 * @throws IOException
+	 * 
+	 */
 	public String initParameter(String line, String separator) throws NullPointerException, IOException {
 		String parameter = "";
 		String[] parameterArray = {};
 		char[] dateArray = {};
 		int i = 0;
 
-
-			if(line.startsWith(separator)) {
-				if (separator.startsWith("DT")) {
-					parameterArray = line.split(separator);
-					for (i = 0; i < parameterArray.length; i++) {
-						parameter += parameterArray[i];
-					}
-					dateArray = parameter.toCharArray();
-					dateArray[10] = dateArray[8];
-					dateArray[9] = dateArray[7];
-					dateArray[8] = '-';
-					dateArray[7] = dateArray[6];
-					dateArray[6] = dateArray[5];
-					dateArray[5] = '-';
-					parameter = new String(dateArray);// + " \n";	
+		if(line.startsWith(separator)) {
+			if (separator.startsWith("DT")) {
+				parameterArray = line.split(separator);
+				for (i = 0; i < parameterArray.length; i++) {
+					parameter += parameterArray[i];
 				}
-				else {
-					parameterArray = line.split(separator);
-					for (i = 0; i < parameterArray.length; i++) {
-						parameter += parameterArray[i];
-					}
+				dateArray = parameter.toCharArray();
+				dateArray[10] = dateArray[8];
+				dateArray[9] = dateArray[7];
+				dateArray[8] = '-';
+				dateArray[7] = dateArray[6];
+				dateArray[6] = dateArray[5];
+				dateArray[5] = '-';
+				parameter = new String(dateArray);// + " \n";	
+			}
+			else {
+				parameterArray = line.split(separator);
+				for (i = 0; i < parameterArray.length; i++) {
+					parameter += parameterArray[i];
 				}
-			} 
+			}
+		} 
 		return parameter;
 
 	}
-
-	/**
-	 * Remove all semicolon from a String
-	 * @param parameter the String we want to clean
-	 * @return a String without any semicolon
-	 */
-	public String cleanString(String parameter) {
-		return parameter.replaceAll(";", ", ");
-
-	}
-
 
 	/**
 	 * @return the dateStart
@@ -196,7 +197,7 @@ public HEventTry(String summary, String dateStart, String dateEnd, String locati
 	 * @return the location
 	 */
 	public String getLocation() {
-		return cleanString(location);
+		return location.replaceAll(";", ",");
 	}
 
 	/**
@@ -215,24 +216,24 @@ public HEventTry(String summary, String dateStart, String dateEnd, String locati
 	}
 
 	/**
-	 * @param url the description to set
-	 * @see HEventTry#url
+	 * @param description the description to set
+	 * @see HEventTry#description
 	 * 
 	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-/**
- * Return an HTML fragment for a vEvent
- * @return an HTML fragment for a vEvent 
- * @see HEventTry#getSummary()
- * @see HEventTry#getDateStart()
- * @see HEventTry#getDateEnd()
- * @see HEventTry#getLocation()
- * @see HEventTry#getUrl()
- * 
- */
+	/**
+	 * Return an HTML fragment for a vEvent
+	 * @return an HTML fragment for a vEvent 
+	 * @see HEventTry#getSummary()
+	 * @see HEventTry#getDateStart()
+	 * @see HEventTry#getDateEnd()
+	 * @see HEventTry#getLocation()
+	 * @see HEventTry#getDescription()
+	 * 
+	 */
 	public String toHtmlEvent() {
 		return "<div class=\\\"vevent\\\">  \n \t"
 				+ "<span class=\\\"description\\\">" + getDescription() + "</span> \n \t"
@@ -250,7 +251,7 @@ public HEventTry(String summary, String dateStart, String dateEnd, String locati
 	@Override
 	public String toString() {
 		return summary + " : " + description + "\n Debute le : " + dateStart + "\n Fini le : " 
-	+ dateEnd + "\n A : " + location + "\n\n";
+				+ dateEnd + "\n A : " + location + "\n\n";
 	}
 
 }
