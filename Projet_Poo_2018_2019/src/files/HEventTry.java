@@ -66,23 +66,30 @@ public class HEventTry implements java.io.Serializable {
 	public HEventTry(String[] str){
 		summary = dateEnd = dateStart = location = description = "";
 		try {
-			//summary = dateEnd = dateStart = location = description = "";
-			System.out.println(description+ dateEnd + dateStart + location + summary + "num 1*********************");
 			for(String line: str) {
-			if(line != null && (line.isEmpty() == false)) {
-				System.out.println("COUCOU TA MEReQIFJOSF,F,Q,FPQEF,PF,OE,F");
-				//System.out.println(description+ dateEnd + dateStart + location + summary + "num 1*********************");
-				summary+=initParameter(line, "SUMMARY:");
-				location+=initParameter(line, "LOCATION:");
-				dateStart+=initParameter(line, "DTSTART;");
-				dateEnd+=initParameter(line, "DTEND;");
-				description+=initParameter(line, "DESCRIPTION:");
-				//System.out.println(description+ dateEnd + dateStart + location + summary + "num 2*********************");}
-			}}System.out.println("*********PARAMETRE FINAUX DE LEVENT ====" + summary + dateEnd + dateStart + location + description);
+				if(line != null && (line.isEmpty() == false)) {
+					System.out.println("COUCOU TA MEReQIFJOSF,F,Q,FPQEF,PF,OE,F");
+					summary+=initParameter(line, "SUMMARY:");
+					location+=initParameter(line, "LOCATION:");
+					dateStart+=initParameter(line, "DTSTART;");
+					dateEnd+=initParameter(line, "DTEND;");
+					description+=initParameter(line, "DESCRIPTION:");
+				}
+			}
 		}catch (NullPointerException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+
+public HEventTry(String summary, String dateStart, String dateEnd, String location, String description) {
+	setDateEnd(dateEnd);
+	setDateStart(dateStart);
+	setLocation(location);
+	setSummary(summary);
+	setDescription(description);
+		// TODO Auto-generated constructor stub
 	}
 
 
@@ -216,7 +223,7 @@ public class HEventTry implements java.io.Serializable {
 	 * @see HEventTry#url
 	 * 
 	 */
-	public void setUrl(String description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
@@ -234,7 +241,7 @@ public class HEventTry implements java.io.Serializable {
 		return "<div class=\\\"vevent\\\">  \n \t"
 				+ "<span class=\\\"description\\\">" + getDescription() + "</span> \n \t"
 				+ "<span class=\\\"summary\\\">" + getSummary() + "</span> \n \t"
-				+ "<abbr class=\\\"dtstart\\\">" + getDateStart() + "</abbr>- \n \t"
+				+ "<abbr class=\\\"dtstart\\\">" + getDateStart() + "</abbr> \n \t"
 				+ "<abbr class=\\\"dtend\\\">" + getDateEnd() + "</abbr>, at the  \n \t"
 				+ "<span class=\\\"location\\\">" + getLocation() + "</span> \n"
 				+ "</div> \n";
@@ -246,7 +253,8 @@ public class HEventTry implements java.io.Serializable {
 	 */
 	@Override
 	public String toString() {
-		return summary + " : " + description + "\n Debute le : " + dateStart + "\n Fini le : " + dateEnd + "\n A : " + location + "\n\n";
+		return summary + " : " + description + "\n Debute le : " + dateStart + "\n Fini le : " 
+	+ dateEnd + "\n A : " + location + "\n\n";
 	}
 
 }

@@ -9,7 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -28,7 +28,7 @@ public class HCalendar {
 	
 	public void create(File vCalendar) {
 		BufferedReader reader = null;
-		String str[] = new String[30];
+		String str[] = new String[100];
 		
 		try {
 			reader = new BufferedReader(new FileReader(vCalendar));
@@ -41,7 +41,6 @@ public class HCalendar {
 		try {
 			String line = reader.readLine();
 			int i = 0;
-			for(String s : str) { s = "";}
 			while(line != null) {
 				if (Objects.equals(line, "END:VEVENT") == false) {
 					System.out.println("creation du string");
@@ -49,10 +48,9 @@ public class HCalendar {
 						line = reader.readLine();
 						i++;
 					}
-				else {
-					System.out.println(str);
-					
+				else {					
 					calendar.add(new HEventTry(str));
+					str = new String[str.length];
 					System.out.println("ajout dun event");
 					i = 0;
 					line = reader.readLine();
@@ -65,13 +63,76 @@ public class HCalendar {
 			e3.printStackTrace();
 		}
 	}
+	
+	public HEventTry searchEvent(String summary) {
+		for(HEventTry event : calendar) {
+			if (event.getSummary().contentEquals(summary)) {
+				return event;
+			}
+		}
+		HEventTry nul = new HEventTry("---","---","---","---","---");
+		return nul;
 
+	}
+	
+	public void modify(String oldsummary, String newSummary, String newDateStart, String newDateEnd, String newLocation, String newDescription) {
+		// TODO Auto-generated method stub
+		HEventTry event = searchEvent(oldsummary);
+		if (event != null) {
+			int i = calendar.indexOf(event);
+			event.setDateEnd(newDateEnd);
+			event.setDateStart(newDateStart);
+			event.setDescription(newDescription);
+			event.setLocation(newLocation);
+			event.setSummary(newSummary);
+			calendar.set(i, event);
+		}
+	}
+	
+	public String[] getAllSummaries() {
+		String str[] = new String[100];
+		int i =0;
+		for(HEventTry event : calendar) {
+			str[i]=event.getSummary();
+			i++;
+		}
+		return str;
+
+	}
+
+	public void toHtmlCalendar() {
+		File fileName = new File("././calendar.html");
+		FileWriter writer = null;
+		String str = "<div class=\\\"vcalendar\\\">  \n";
+		try {
+			writer = new FileWriter(fileName);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			for(HEventTry event : calendar) {
+				str += event.toHtmlEvent();
+			}
+			str += "</div>";
+			writer.write(str);
+			writer.close();
+		}catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "HCalendarTry [calendar=" + calendar + "]";
+		String str = "Calendrier : \n************\n\n";
+		for(HEventTry event : calendar) {
+			str+= event.toString();
+		}
+		return str;
 	}
 	
 	
