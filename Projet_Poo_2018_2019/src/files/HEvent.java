@@ -12,6 +12,11 @@ import java.io.IOException;
 public class HEvent implements java.io.Serializable {
 
 	/**
+	 * Serial version UID for this class
+	 */
+	private static final long serialVersionUID = -7262625584590060341L;
+
+	/**
 	 * Start date of the event. This field can be changed.
 	 * @see HEvent#getDateStart()
 	 * @see HEvent#setDateStart(String)

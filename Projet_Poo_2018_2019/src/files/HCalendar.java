@@ -15,8 +15,12 @@ import java.util.Objects;
 /**
  * @author Yael
  */
-public class HCalendar {
+public class HCalendar implements java.io.Serializable {
 	
+	/**
+	 * implements java.io.Serializable 
+	 */
+	private static final long serialVersionUID = -5356372060144573590L;
 	/**
 	 * ArrayList containing all the event of an calendar
 	 */

@@ -21,6 +21,11 @@ import java.io.ObjectOutputStream;
 public class HCard implements java.io.Serializable {
 
 	/**
+	 * Serial version UID for this class
+	 */
+	private static final long serialVersionUID = -3292298168924048584L;
+
+	/**
 	 * Name of the person. This field can be changed
 	 *@see HCard#getName()
 	 *@see HCard#setName(String)
