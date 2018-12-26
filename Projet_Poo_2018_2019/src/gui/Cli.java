@@ -7,6 +7,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Objects;
 
 import files.HCalendar;
 import files.HCard;
@@ -17,12 +18,12 @@ public class Cli  {
 	private HCalendar calendar;
 	
 	public static void main(String[] args) {
-		if(args[0].equals(null)) {
+		if(args.length == 0) {
 			
-			System.out.println("-d folder : affiche les fichiers vcf et ics du dossier spécifié");
-			System.out.println("-i file : Prend en entrée file et affiche son contenu en mode console");
-			System.out.println("-i file -o file.ser : Prend en entrée file et sauvegarde le contenu structuré dans un fichier file.ser");
-			System.out.println("-i file -h fragment.html : Prend file en entrée et génère le fichier fragment.html");
+			System.out.println("-d folder : affiche les fichiers vcf et ics du dossier specifie");
+			System.out.println("-i file : Prend en entree file et affiche son contenu en mode console");
+			System.out.println("-i file -o file.ser : Prend en entrï¿½e file et sauvegarde le contenu structurï¿½ dans un fichier file.ser");
+			System.out.println("-i file -h fragment.html : Prend file en entree et genere le fichier fragment.html");
 		}
 		else if(args[0].equals("-d")) {
 			
@@ -50,7 +51,7 @@ public class Cli  {
 					serializeHCard(card, fileser);
 				}
 				else if(args[2].equals("-h")) {
-					card.toHtml();
+					card.toHtml(card.getName().replaceAll(" ", "") + ".html");
 				}
 			}
 		}
@@ -67,7 +68,7 @@ public class Cli  {
 					serializeHCalendar(calendar, fileser);
 				}
 				else if(args[2].equals("-h")) {
-					calendar.toHtmlCalendar();
+					calendar.toHtmlCalendar("calendar.html");
 				}
 			}
 		}
@@ -108,7 +109,7 @@ public class Cli  {
         try {
                 ObjectOutputStream oout = new ObjectOutputStream(new FileOutputStream(fileName));
                 oout.writeObject(card);
-                System.out.println(card.getName() + " a été serialisé");
+                System.out.println(card.getName() + " a ete serialise");
                 oout.close();
         } catch (IOException ioe) {
                 ioe.printStackTrace();
@@ -119,7 +120,7 @@ public class Cli  {
 		try {
 			ObjectInputStream oin = new ObjectInputStream(new FileInputStream(fileName));
 			card = (HCard) oin.readObject();
-			System.out.println(card.getName() + " a été deserialise");
+			System.out.println(card.getName() + " a ete deserialise");
 			oin.close();
 		} catch (ClassNotFoundException nfe) {
 			nfe.printStackTrace();
