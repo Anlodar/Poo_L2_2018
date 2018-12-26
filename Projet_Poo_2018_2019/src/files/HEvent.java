@@ -52,6 +52,8 @@ public class HEvent implements java.io.Serializable {
 	 * Then, using initParemeter() and a array of string, the fields and the content they have to get are concatenate.</p> 
 	 * @param str a String array containing lines of a ics file event 
 	 * @see HEvent#initParameter(String, String)
+	 * @see IOException
+	 * @see NullPointerException
 	 */
 	public HEvent(String[] str){
 		summary = dateEnd = dateStart = location = description = "";
