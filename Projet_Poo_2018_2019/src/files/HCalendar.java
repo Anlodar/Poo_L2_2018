@@ -43,7 +43,6 @@ public class HCalendar {
 			int i = 0;
 			while(line != null) {
 				if (Objects.equals(line, "END:VEVENT") == false) {
-					System.out.println("creation du string");
 						str[i] = line;
 						line = reader.readLine();
 						i++;
@@ -51,7 +50,6 @@ public class HCalendar {
 				else {					
 					calendar.add(new HEventTry(str));
 					str = new String[str.length];
-					System.out.println("ajout dun event");
 					i = 0;
 					line = reader.readLine();
 				}
