@@ -4,8 +4,10 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import javax.swing.BoxLayout;
@@ -42,6 +44,7 @@ public class Gui implements ActionListener{
 	private static JSplitPane splitgauche;
 	private FileFilter filterVCF;
 	private FileFilter filterICS;
+	private FileFilter filterSER;
 	private JPanel buttonpane;
 	private HCard card;
 	private HCalendar calendar;
@@ -90,7 +93,8 @@ public class Gui implements ActionListener{
 		fc = new JFileChooser();
 		filterVCF = new FileNameExtensionFilter("VCF File", "vcf");
 		filterICS = new FileNameExtensionFilter("ICS File", "ics");
-
+		filterSER = new FileNameExtensionFilter("SER File", "ser");
+		
 		// Initialize Buttons //
 		buttonmod = new JButton("Modifier");
 		buttonser = new JButton("Serialiser");		
@@ -118,6 +122,7 @@ public class Gui implements ActionListener{
 		fc.setFileSelectionMode(0);
 		fc.setFileFilter(filterVCF);
 		fc.setFileFilter(filterICS);
+		fc.setFileFilter(filterSER);
 
 		// Add ActionListener on object //
 		openbutton.addActionListener(this);
@@ -257,6 +262,49 @@ public class Gui implements ActionListener{
 					adressWork.setText("");
 					adressWork.setEditable(false);
 				}
+				else if(type.equals(".ser")) {
+					if(file.getName().equals("calendar.ser")) {
+						calendar = deserializeHCalendar(file);
+						textarea.setText("");
+						textarea.append(calendar.toString());
+
+						event = calendar.getAllSummaries();
+
+						for(int i=0; i < event.length; i++) {
+							if(event[i] != null) {
+								box.addItem(event[i]);
+							}
+						}
+
+						// Set the current variable in JTextFields
+						oldname = calendar.searchEvent(box.getSelectedItem().toString()).getSummary();
+						name.setText(oldname);
+						number.setText(calendar.searchEvent(box.getSelectedItem().toString()).getDescription());
+						numberWork.setText(calendar.searchEvent(box.getSelectedItem().toString()).getDateStart());
+						mail.setText(calendar.searchEvent(box.getSelectedItem().toString()).getDateEnd());
+						adressHome.setText(calendar.searchEvent(box.getSelectedItem().toString()).getLocation());
+						adressWork.setText("");
+						adressWork.setEditable(false);
+						type = ".ics";
+					}
+					else {
+						card = deserializeHCard(file);
+						textarea.setText("");
+						textarea.append(card.toString());
+
+						box.removeAllItems();
+
+						// Set the current Variable in the JTextFields //
+						name.setText(card.getName());
+						number.setText(card.getNumberHome());
+						numberWork.setText(card.getNumberWork());
+						mail.setText(card.getMail());
+						adressHome.setText(card.getMail());
+						adressWork.setText(card.getAdressWork());
+						adressWork.setEditable(true);
+						type = ".vcf";
+					}
+				}
 			}
 		}
 		// Handle buttonmod action //
@@ -282,7 +330,7 @@ public class Gui implements ActionListener{
 			}
 			// Case where the file choosed is a VCalendar //
 			else if(type.equals(".ics")) {
-
+				serializeHCalendar(calendar, new File("calendar.ser"));
 			}
 		}
 		// Handle buttonhtml action //
@@ -325,7 +373,56 @@ public class Gui implements ActionListener{
 	public static JSplitPane getSplitPane() {
 		return splitPane;
 	}
-
+	
+	public static void serializeHCard(HCard card, File fileName) {
+        try {
+                ObjectOutputStream oout = new ObjectOutputStream(new FileOutputStream(fileName));
+                oout.writeObject(card);
+                System.out.println(card.getName() + " a été serialisé");
+                oout.close();
+        } catch (IOException ioe) {
+                ioe.printStackTrace();
+        }
+	}
+	
+	public static HCard deserializeHCard(File fileName) {
+		HCard card = null;
+		try {
+			ObjectInputStream oin = new ObjectInputStream(new FileInputStream(fileName));
+			card = (HCard) oin.readObject();
+			System.out.println(card.getName() + " a été deserialise");
+			oin.close();
+		} catch (ClassNotFoundException nfe) {
+			nfe.printStackTrace();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+		return card;
+	}
+	
+	public static void serializeHCalendar(HCalendar calendar, File fileName) {
+		try {
+			ObjectOutputStream oout = new ObjectOutputStream(new FileOutputStream(fileName));
+			oout.writeObject(calendar);
+			oout.close();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+	}
+	
+	public static HCalendar deserializeHCalendar(File fileName) {
+		HCalendar calendar = null;
+		try {
+			ObjectInputStream oin = new ObjectInputStream(new FileInputStream(fileName));
+			calendar = (HCalendar) oin.readObject();
+			oin.close();
+		} catch (ClassNotFoundException nfe) {
+			nfe.printStackTrace();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+		return calendar;
+	}
 	public static void main(String[] args) {
 
 		Gui gui =new Gui();
@@ -334,20 +431,7 @@ public class Gui implements ActionListener{
 		window.setLocationRelativeTo(null);
 		window.add(gui.getSplitPane());
 		window.pack();
-		window.setResizable(true);
+		window.setResizable(false);
 		window.setVisible(true);
 	}
-	
-	
-	
-	public static void serializeHCard(HCard card, File fileName) {
-        try {
-                ObjectOutputStream oout = new ObjectOutputStream(new FileOutputStream(fileName));
-                oout.writeObject(card);
-                System.out.println(card.getName() + " a Ã©tÃ© serialisÃ©");
-                oout.close();
-        } catch (IOException ioe) {
-                ioe.printStackTrace();
-        }
-	 }
 }
