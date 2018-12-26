@@ -233,7 +233,7 @@ public class Gui implements ActionListener{
 					number.setText(card.getNumberHome());
 					numberWork.setText(card.getNumberWork());
 					mail.setText(card.getMail());
-					adressHome.setText(card.getMail());
+					adressHome.setText(card.getAdressHome());
 					adressWork.setText(card.getAdressWork());
 					adressWork.setEditable(true);
 				}
@@ -378,7 +378,7 @@ public class Gui implements ActionListener{
         try {
                 ObjectOutputStream oout = new ObjectOutputStream(new FileOutputStream(fileName));
                 oout.writeObject(card);
-                System.out.println(card.getName() + " a été serialisé");
+                System.out.println(card.getName() + " a ete serialise");
                 oout.close();
         } catch (IOException ioe) {
                 ioe.printStackTrace();
@@ -390,7 +390,7 @@ public class Gui implements ActionListener{
 		try {
 			ObjectInputStream oin = new ObjectInputStream(new FileInputStream(fileName));
 			card = (HCard) oin.readObject();
-			System.out.println(card.getName() + " a été deserialise");
+			System.out.println(card.getName() + " a ete deserialise");
 			oin.close();
 		} catch (ClassNotFoundException nfe) {
 			nfe.printStackTrace();
