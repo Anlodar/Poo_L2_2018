@@ -148,6 +148,7 @@ public class HCalendar {
 
 	/**
 	 * Create a file containing an html fragment corresponding to a calendar
+	 * @param fileName the name of the html file to create
 	 * @see File
 	 * @see FileReader
 	 * @see IOException
