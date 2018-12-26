@@ -82,32 +82,12 @@ public class HCard implements java.io.Serializable {
  * @see HCard#initParameter(String, String)
  */
 	public HCard(File fileNameVCard) {
-		/*BufferedReader bf = null;
-		try {
-			bf = new BufferedReader(new FileReader(fileNameVCard));
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/
 		name = initParameter(fileNameVCard, "FN:");
 		adressHome = initParameter(fileNameVCard, "ADR;TYPE=HOME:;;");
 		adressWork = initParameter(fileNameVCard, "ADR;TYPE=WORK:;;");
 		numberHome = initParameter(fileNameVCard, "TEL;TYPE=HOME:");
 		numberWork = initParameter(fileNameVCard, "TEL;TYPE=WORK:");
 		mail = initParameter(fileNameVCard, "EMAIL:");
-
-		/*try {
-		bf.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			try {
-				bf.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}*/	
 	}
 
 	/**
@@ -118,7 +98,7 @@ public class HCard implements java.io.Serializable {
 	 * @see BufferedReader
 	 * @see FileReader#FileReader(String)
 	 */
-	public String initParameter(File fileNameVCard/*, BufferedReader bf*/, String separator) {
+	public String initParameter(File fileNameVCard, String separator) {
 		String str;
 		String[] parameterArray = null;
 		String parameter = "";
@@ -137,7 +117,6 @@ public class HCard implements java.io.Serializable {
 					for (i=1 ; i < parameterArray.length; i++) {
 						parameter += parameterArray[i];
 					}
-					parameter += " \n";
 				}
 			}
 			bf.close();
@@ -164,6 +143,15 @@ public class HCard implements java.io.Serializable {
 	public String cleanString(String parameter) {
 		return parameter.replaceAll(";", ", ");
 
+	}
+	
+	public void modify(String name, String adressHome, String adressWork, String numberHome, String numberWork, String mail) {
+		setAdressHome(adressHome);
+		setAdressWork(adressWork);
+		setMail(mail);
+		setName(name);
+		setNumberHome(numberHome);
+		setNumberWork(numberWork);
 	}
 
 	/**
@@ -298,14 +286,9 @@ public class HCard implements java.io.Serializable {
 		String[] strAdrH;
 		String[] strAdrW;
 		String str = null;
-		
-		int i;
-		
+				
 		strAdrH = getAdressHome().split(", ");
 		strAdrW = getAdressWork().split(", ");
-		for(i=0; i<strAdrW.length; i++) {
-			System.out.println(strAdrW[i]);
-		}
 		try {
 			writer = new FileWriter(fileName);
 		} catch (IOException e1) {
@@ -358,8 +341,8 @@ public class HCard implements java.io.Serializable {
 	 */
 	@Override
 	public String toString() {
-		return name + "Address Work: " + adressWork + "Address Home: " + adressHome + "Number Work: "
-				+ numberWork + "Number Home: " + numberHome + "Mail:" + mail;
+		return getName() + "\n Address : (work)" + getAdressWork() + " | (home)" + getAdressHome() + "\n Number : (work)"
+				+ getNumberWork() + " | (home)" + getNumberHome() + "\n Mail:" + getMail();
 	}
 	
 	/**
