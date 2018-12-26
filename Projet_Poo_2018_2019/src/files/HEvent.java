@@ -3,13 +3,7 @@
  */
 package files;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-
-import javax.swing.JTextField;
 
 /**
  * @author Yael
@@ -102,7 +96,7 @@ public class HEvent implements java.io.Serializable {
 
 
 	/**
-	 * Return a String to initialized a field
+	 * Return a String to initialized a field if the beginning of a "line" is equal to the "separator"
 	 * @param line a line of the ics file
 	 * @param separator the tag indicating if it's the line to use to initialize the field
 	 * @return a String to initialize a field
