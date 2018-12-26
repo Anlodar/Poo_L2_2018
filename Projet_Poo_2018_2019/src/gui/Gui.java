@@ -4,6 +4,9 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -119,6 +122,8 @@ public class Gui implements ActionListener{
 		// Add ActionListener on object //
 		openbutton.addActionListener(this);
 		buttonmod.addActionListener(this);
+		buttonser.addActionListener(this);
+		buttonhtml.addActionListener(this);
 		box.addActionListener(this);
 
 		// Set the Size of JTextFields //
@@ -273,7 +278,7 @@ public class Gui implements ActionListener{
 		else if(e.getSource() == buttonser) {
 			// Case where the file choosed is a VCard //
 			if(type.equals(".vcf")) {
-
+				serializeHCard(card, new File(card.getName().replaceAll(" ", "") + ".ser"));
 			}
 			// Case where the file choosed is a VCalendar //
 			else if(type.equals(".ics")) {
@@ -332,4 +337,17 @@ public class Gui implements ActionListener{
 		window.setResizable(true);
 		window.setVisible(true);
 	}
+	
+	
+	
+	public static void serializeHCard(HCard card, File fileName) {
+        try {
+                ObjectOutputStream oout = new ObjectOutputStream(new FileOutputStream(fileName));
+                oout.writeObject(card);
+                System.out.println(card.getName() + " a été serialisé");
+                oout.close();
+        } catch (IOException ioe) {
+                ioe.printStackTrace();
+        }
+	 }
 }
