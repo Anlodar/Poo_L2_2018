@@ -19,7 +19,7 @@ import java.io.ObjectOutputStream;
  *
  */
 public class HCard implements java.io.Serializable {
-	
+
 	/**
 	 * Name of the person. This field can be changed
 	 *@see HCard#getName()
@@ -27,7 +27,7 @@ public class HCard implements java.io.Serializable {
 	 *
 	 */
 	private String name;
-	
+
 	/**
 	 * Personal address of the person. This field can be changed
 	 * @see HCard#getAdressHome()
@@ -35,7 +35,7 @@ public class HCard implements java.io.Serializable {
 	 * 
 	 */
 	private String adressHome;
-	
+
 	/**
 	 * Work address of the person. This field can be changed
 	 * @see HCard#getAdressWork()
@@ -43,7 +43,7 @@ public class HCard implements java.io.Serializable {
 	 * 
 	 */
 	private String adressWork;
-	
+
 	/**
 	 * Personal number of the person. This field can be changed
 	 * @see HCard#getNumberHome()
@@ -51,7 +51,7 @@ public class HCard implements java.io.Serializable {
 	 * 
 	 */
 	private String numberHome;
-	
+
 	/**
 	 * Work number of the person. This field can be changed
 	 * @see HCard#getNumberWork()
@@ -59,7 +59,7 @@ public class HCard implements java.io.Serializable {
 	 * 
 	 */
 	private String numberWork;
-	
+
 	/**
 	 * Email address of the person. This field can be changed
 	 * @see HCard#getMail()
@@ -67,27 +67,28 @@ public class HCard implements java.io.Serializable {
 	 * 
 	 */
 	private String mail;
-	
-/**
- * 	Constructor HCard
- * <p>When an object is builded, all fields are initialized by using initParemeter method.</p>
- *   
- * @param fileNameVCard the name of the file in reading
- * @see HCard#name
- * @see HCard#adressHome
- * @see HCard#adressWork
- * @see HCard#numberHome
- * @see HCard#numberWork
- * @see HCard#mail
- * @see HCard#initParameter(String, String)
- */
+
+	/**
+	 * 	Constructor HCard
+	 * <p>When an object is builded, all fields are initialized by using initParemeter method.</p>
+	 *   
+	 * @param fileNameVCard the name of the file in reading
+	 * @see HCard#name
+	 * @see HCard#adressHome
+	 * @see HCard#adressWork
+	 * @see HCard#numberHome
+	 * @see HCard#numberWork
+	 * @see HCard#mail
+	 * @see HCard#initParameter(String, String)
+	 */
 	public HCard(File fileNameVCard) {
-		name = initParameter(fileNameVCard, "FN:");
-		adressHome = initParameter(fileNameVCard, "ADR;TYPE=HOME:;;");
-		adressWork = initParameter(fileNameVCard, "ADR;TYPE=WORK:;;");
-		numberHome = initParameter(fileNameVCard, "TEL;TYPE=HOME:");
-		numberWork = initParameter(fileNameVCard, "TEL;TYPE=WORK:");
-		mail = initParameter(fileNameVCard, "EMAIL:");
+		name = adressHome = adressWork = numberHome = numberWork = mail = "";
+		name += initParameter(fileNameVCard, "FN:");
+		adressHome += initParameter(fileNameVCard, "ADR;TYPE=HOME:;;");
+		adressWork += initParameter(fileNameVCard, "ADR;TYPE=WORK:;;");
+		numberHome += initParameter(fileNameVCard, "TEL;TYPE=HOME:");
+		numberWork += initParameter(fileNameVCard, "TEL;TYPE=WORK:");
+		mail += initParameter(fileNameVCard, "EMAIL:");
 	}
 
 	/**
@@ -144,7 +145,7 @@ public class HCard implements java.io.Serializable {
 		return parameter.replaceAll(";", ", ");
 
 	}
-	
+
 	public void modify(String name, String adressHome, String adressWork, String numberHome, String numberWork, String mail) {
 		setAdressHome(adressHome);
 		setAdressWork(adressWork);
@@ -268,29 +269,29 @@ public class HCard implements java.io.Serializable {
 		this.mail = mail;
 	}
 
-/**
- * Create a file containing an html fragment corresponding to a business card
- * 
- * @see HCard#getName()
- * @see HCard#getAdressHome()
- * @see HCard#getAdressWork()
- * @see HCard#getNumberHome()
- * @see HCard#getNumberWork()
- * @see HCard#getMail()
- * @see FileWriter
- * 
- */
-	public void toHtml() {
-		File fileName = new File("././" + getName().replaceAll(" ", "")+"card.html");
+	/**
+	 * Create a file containing an html fragment corresponding to a business card
+	 * @param fileName the name of the html file to create
+	 * @see HCard#getName()
+	 * @see HCard#getAdressHome()
+	 * @see HCard#getAdressWork()
+	 * @see HCard#getNumberHome()
+	 * @see HCard#getNumberWork()
+	 * @see HCard#getMail()
+	 * @see FileWriter
+	 * 
+	 */
+	public void toHtml(String fileName) {
+		File file = new File(fileName);
 		FileWriter writer = null;
 		String[] strAdrH;
 		String[] strAdrW;
 		String str = null;
-				
+
 		strAdrH = getAdressHome().split(", ");
 		strAdrW = getAdressWork().split(", ");
 		try {
-			writer = new FileWriter(fileName);
+			writer = new FileWriter(file);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -334,8 +335,6 @@ public class HCard implements java.io.Serializable {
 
 	} 
 
-
-
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -344,43 +343,5 @@ public class HCard implements java.io.Serializable {
 		return getName() + "\n Address : (work)" + getAdressWork() + " | (home)" + getAdressHome() + "\n Number : (work)"
 				+ getNumberWork() + " | (home)" + getNumberHome() + "\n Mail:" + getMail();
 	}
-	
-	/**
-	 * Serialize an HCard to a binary file
-	 * @param card an HCard to serialize
-	 */
-	 public static void serialiser(HCard card) {
-         try {
-                 FileOutputStream fout = new FileOutputStream("./");
-                 ObjectOutputStream oout = new ObjectOutputStream(fout);
-                 oout.writeObject(card);
-                 System.out.println(card.getName() + " a été serialisé");
-                 oout.close();
-                 fout.close();
-         } catch (IOException ioe) {
-                 ioe.printStackTrace();
-         }
-	 }
-
-	 /**
-	  * Unserialize an HCard from a serialized binary file
-	  * @return an HCard from a binary file
-	  */
-	 public static HCard deserialiser() {
-         HCard card = null;
-         try {
-                 FileInputStream fin = new FileInputStream("./");
-                 ObjectInputStream oin = new ObjectInputStream(fin);
-                 card = (HCard) oin.readObject();
-                 System.out.println(card.getName() + " a été deserialise");
-                 oin.close();
-                 fin.close();
-         } catch (ClassNotFoundException nfe) {
-                 nfe.printStackTrace();
-         } catch (IOException ioe) {
-                 ioe.printStackTrace();
-         }
-         return card;
-	 }
 
 }
