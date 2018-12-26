@@ -234,8 +234,8 @@ public class HEvent implements java.io.Serializable {
 	 */
 	public String toHtmlEvent() {
 		return "<div class=\\\"vevent\\\">  \n \t"
-				+ "<span class=\\\"description\\\">" + getDescription() + "</span> \n \t"
 				+ "<span class=\\\"summary\\\">" + getSummary() + "</span> \n \t"
+				+ "<span class=\\\"description\\\">" + getDescription() + "</span> \n \t"
 				+ "<abbr class=\\\"dtstart\\\">" + getDateStart() + "</abbr> \n \t"
 				+ "<abbr class=\\\"dtend\\\">" + getDateEnd() + "</abbr>, at the  \n \t"
 				+ "<span class=\\\"location\\\">" + getLocation() + "</span> \n"

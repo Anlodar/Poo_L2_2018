@@ -190,8 +190,6 @@ public class HCalendar implements java.io.Serializable {
 			str+= event.toString();
 		}
 		return str;
-	}
-	
-	
+	}	
 
 }

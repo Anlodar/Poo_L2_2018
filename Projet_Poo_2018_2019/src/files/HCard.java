@@ -345,8 +345,8 @@ public class HCard implements java.io.Serializable {
 	 */
 	@Override
 	public String toString() {
-		return getName() + "\n Address : (work)" + getAdressWork() + " | (home)" + getAdressHome() + "\n Number : (work)"
-				+ getNumberWork() + " | (home)" + getNumberHome() + "\n Mail:" + getMail();
+		return getName() + "\n Address (work): " + getAdressWork() + "\n Address (home): " + getAdressHome() + "\n Number (work): "
+				+ getNumberWork() + "\n Number (home): " + getNumberHome() + "\n Mail:" + getMail();
 	}
 
 }
