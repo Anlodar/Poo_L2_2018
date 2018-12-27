@@ -373,6 +373,18 @@ public class Gui implements ActionListener{
 		return splitPane;
 	}
 	
+	// Serialize a HCard //
+	/**
+	 * Serialize the HCard
+	 * 
+	 * @param card
+	 * @param fileName
+	 * 
+	 * @see ObjectOutputStream#writeObject(Object)
+	 * @see ObjectOutputStream#close()
+	 * @see HCard#getName()
+	 * @see IOException#printStackTrace()
+	 */
 	public static void serializeHCard(HCard card, File fileName) {
         try {
                 ObjectOutputStream oout = new ObjectOutputStream(new FileOutputStream(fileName));
@@ -383,6 +395,18 @@ public class Gui implements ActionListener{
         }
 	}
 	
+	// Deserialize a HCard //
+	/**
+	 * Deserialize an HCard
+	 * 
+	 * @param fileName
+	 * @return card the HCard deserialize
+	 * 
+	 * @see ObjectOutputStream#writeObject(Object)
+	 * @see ObjectOutputStream#close()
+	 * @see HCard#getName()
+	 * @see IOException#printStackTrace()
+	 */
 	public static HCard deserializeHCard(File fileName) {
 		HCard card = null;
 		try {
@@ -396,7 +420,18 @@ public class Gui implements ActionListener{
 		}
 		return card;
 	}
-	
+	// Serialize a HCalendar //
+	/**
+	 * Serialize a HCalendar
+	 * 
+	 * @param calendar
+	 * @param fileName
+	 * 
+	 * @see ObjectOutputStream#writeObject(Object)
+	 * @see ObjectOutputStream#close()
+	 * @see HCard#getName()
+	 * @see IOException#printStackTrace()
+	 */
 	public static void serializeHCalendar(HCalendar calendar, File fileName) {
 		try {
 			ObjectOutputStream oout = new ObjectOutputStream(new FileOutputStream(fileName));
@@ -406,7 +441,17 @@ public class Gui implements ActionListener{
 			ioe.printStackTrace();
 		}
 	}
-	
+	// Deserialize a HCalendar //
+	/**
+	 * Deserialize a HCalendar
+	 * 
+	 * @param fileName
+	 * @return calendar the HCalendar deserialize
+	 * @see ObjectOutputStream#writeObject(Object)
+	 * @see ObjectOutputStream#close()
+	 * @see HCard#getName()
+	 * @see IOException#printStackTrace()
+	 */
 	public static HCalendar deserializeHCalendar(File fileName) {
 		HCalendar calendar = null;
 		try {
@@ -423,6 +468,7 @@ public class Gui implements ActionListener{
 	public static void main(String[] args) {
 
 		Gui gui =new Gui();
+		// Creation of the Window //
 		window = new JFrame();
 		window.setTitle("Ma fenetre");
 		window.setLocationRelativeTo(null);

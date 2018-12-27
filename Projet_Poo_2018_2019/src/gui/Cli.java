@@ -22,6 +22,7 @@ public class Cli  {
 	public static void main(String[] args) {
 		if(args.length == 0) {
 			
+			// Print the different options //
 			System.out.println("-d folder : affiche les fichiers vcf et ics du dossier specifie");
 			System.out.println("-i file : Prend en entree file et affiche son contenu en mode console");
 			System.out.println("-i file -o file.ser : Prend en entree file et sauvegarde le contenu structure dans un fichier file.ser");
@@ -37,7 +38,24 @@ public class Cli  {
 		}
 		
 	}
-	
+	// This Method get the String[] and process the command line // 
+	/**
+	 * Access and deals with the command line in console 
+	 * @param args
+	 * 
+	 * @see String#endsWith(String)
+	 * @see File#isFile()
+	 * @see HCard#toString()
+	 * @see HCard#getName()
+	 * @see String#replaceAll(String, String)
+	 * @see Cli#serializeHCard(HCard, File)
+	 * @see String#equals(Object)
+	 * @see HCard#toHtml(String)
+	 * @see HCalendar#toString()
+	 * @see HCalendar#toHtmlCalendar(String)
+	 * @see	Cli#serializeHCalendar(HCalendar, File)
+	 * 
+	 */
 	public static void Access(String[] args) {
 		
 		if(args[1].endsWith(".vcf")) {
@@ -77,6 +95,15 @@ public class Cli  {
 			}
 		}
 	}
+	
+	// This method get files from the directory and print them //
+	/**
+	 * Show the list of files in the directory
+	 * @param directory
+	 * 
+	 * @see File#listFiles()
+	 * @see File#getCanonicalPath()
+	 */
 	public static void ShowFiles(String directory) {
         File folder = new File(directory);
         File[] listOfFiles = folder.listFiles(new FilenameFilter() {
@@ -109,6 +136,18 @@ public class Cli  {
             
         }
 	}
+	// Serialize a HCard //
+	/**
+	 * Serialize the HCard
+	 * 
+	 * @param card
+	 * @param fileName
+	 * 
+	 * @see ObjectOutputStream#writeObject(Object)
+	 * @see ObjectOutputStream#close()
+	 * @see HCard#getName()
+	 * @see IOException#printStackTrace()
+	 */
 	public static void serializeHCard(HCard card, File fileName) {
         try {
                 ObjectOutputStream oout = new ObjectOutputStream(new FileOutputStream(fileName));
@@ -119,6 +158,19 @@ public class Cli  {
                 ioe.printStackTrace();
         }
 	 }
+	
+	// Deserialize a HCard //
+	/**
+	 * Deserialize an HCard
+	 * 
+	 * @param fileName
+	 * @return card the HCard deserialize
+	 * 
+	 * @see ObjectOutputStream#writeObject(Object)
+	 * @see ObjectOutputStream#close()
+	 * @see HCard#getName()
+	 * @see IOException#printStackTrace()
+	 */
 	public static HCard deserializeHCard(File fileName) {
 		HCard card = null;
 		try {
@@ -133,6 +185,19 @@ public class Cli  {
 		}
 		return card;
 	}
+	
+	// Serialize a HCalendar //
+	/**
+	 * Serialize a HCalendar
+	 * 
+	 * @param calendar
+	 * @param fileName
+	 * 
+	 * @see ObjectOutputStream#writeObject(Object)
+	 * @see ObjectOutputStream#close()
+	 * @see HCard#getName()
+	 * @see IOException#printStackTrace()
+	 */
 	public static void serializeHCalendar(HCalendar calendar, File fileName) {
 		try {
 			ObjectOutputStream oout = new ObjectOutputStream(new FileOutputStream(fileName));
@@ -143,7 +208,17 @@ public class Cli  {
 			ioe.printStackTrace();
 		}
 	}
-
+	// Deserialize a HCalendar //
+	/**
+	 * Deserialize a HCalendar
+	 * 
+	 * @param fileName
+	 * @return calendar the HCalendar deserialize
+	 * @see ObjectOutputStream#writeObject(Object)
+	 * @see ObjectOutputStream#close()
+	 * @see HCard#getName()
+	 * @see IOException#printStackTrace()
+	 */
 	public static HCalendar deserializeHCalendar(File fileName) {
 		HCalendar calendar = null;
 		try {
