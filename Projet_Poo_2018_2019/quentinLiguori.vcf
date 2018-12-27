@@ -1,0 +1,15 @@
+BEGIN:VCARD
+VERSION:4.0
+N:Liguori;Quentin;;Monsieur;
+FN:Quentin Liguori
+TITLE:Monsieur
+NICKNAME:Kent
+GENDER:Masculin
+ORG:Intermarche;Employe poly
+ADR;TYPE=WORK:;;4 place de la Bussie;Vaureal;Val d'Oise;95410;France;PREF;QUOTED-PRINTABLE:;Service
+ADR;TYPE=HOME:;;56 rue du clerc;Cergy;Val d'Oise;95000;France
+EMAIL:q.liguo@mail.com
+TITLE;QUOTED-PRINTABLE:
+TEL;TYPE=WORK:(+33)134298907
+TEL;TYPE=HOME:(+33)623115856
+END:VCARD

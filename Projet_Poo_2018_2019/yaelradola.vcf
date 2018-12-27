@@ -1,0 +1,14 @@
+BEGIN:VCARD
+VERSION:4.0
+N:RADOLA;Yael;;Monsieur;
+FN:Yael Radola
+TITLE:Monsieur
+NICKNAME:Yayou
+GENDER:Masculin
+ORG:UCP;Etudiant
+ADR;TYPE=WORK:;;3 avenue Adolphe Chanvin;Pontoise;Val d'Oise;95OO;France;PREF;QUOTED-PRINTABLE:;Service
+ADR;TYPE=HOME:;;112b rue du Papont;Jouy;Val d'Oise;95200;France
+EMAIL:roulette.disable@mail.net
+TEL;TYPE=WORK:(+33)130295982
+TEL;TYPE=HOME:(+33)625648993
+END:VCARD

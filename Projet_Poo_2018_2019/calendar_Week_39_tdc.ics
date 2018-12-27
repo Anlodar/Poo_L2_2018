@@ -1,0 +1,27 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+SUMMARY:Partiel Algèbre
+DTSTART;:20190109::
+DTEND;:20190109::
+LOCATION:Salle B211, UFR Saint Martin
+DESCRIPTION: Partiel d'Algèbre de fin de semestre/ Groupe A,B,C,D,E,CUPGE / Examinateur : Marta Dupons
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Partiel Algorithmique
+DTSTART;:20190109::
+DTEND;:20190109::
+LOCATION:Salle B211, UFR Saint Martin
+DESCRIPTION: Partiel d'Algorithmique de fin de semestre/ Groupe A,B,C,D,E / Examinateur : Maelle Dupont
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Partiel POO
+DTSTART;:20190111::
+DTEND;:20190111::
+LOCATION:Salle B211, UFR Saint Martin
+DESCRIPTION: Partiel de POO de fin de semestre/ Groupe A,B,C,D,E / Examinateur : Martin Dupond
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,35 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+SUMMARY:HellFest
+DTSTART;:20190621::
+DTEND;:201906023::
+LOCATION:Clisson
+DESCRIPTION: Le Hellfest est un festival de musique français spécialisé dans les musiques extrêmes. Programmation : Scorpions, Iron Maiden, Deep Purple, ZZ Top...
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Japan Expo
+DTSTART;:20190704::
+DTEND;::20190409::
+LOCATION:Parc des Expositions, Paris-Nord Villepinte
+DESCRIPTION: Japan Expo est un salon événementiel professionnel français sur la culture populaire japonaise. Il s'agit d'une manifestation culturelle consacrée aux manga, aux jeux vidéo, aux anime, mais aussi aux arts martiaux, à la mode... 
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Comic-con 2019
+DTSTART;:201907018::
+DTEND;:20190721::
+LOCATION:111 W. Harbor Dr., San Diego, CA 92101
+DESCRIPTION: Le San Diego Comic-Con International est une convention de comics. Présentant à l'origine essentiellement des bandes dessinées, le Comic-Con s'est élargi au fil des années pour s'ouvrir à une frange plus large de la pop culture. 
+STATUS:CONFIRMED
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:Tomorrowland Winter 2019
+DTSTART;:20190309::
+DTEND;:20190316::
+LOCATION:Domaine Provincial De Schorre à Boom,Anvers, Belgique.
+DESCRIPTION: Tomorrowland est un festival de musique électronique organisé au mois de juillet sur le site du domaine provincial De Schorre à Boom, dans la province d'Anvers, en Belgique.
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR
