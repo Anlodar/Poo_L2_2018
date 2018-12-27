@@ -7,7 +7,7 @@ Liguori Quentin    TDC
 
 Pour utliser la GUI ou la CLI 
 nous avons laissé à votre disposition deux 
-exemples de chaque type de fichier
+exemples de chaque type de fichier dans le dossier sample
 
 // Javadoc //
 La Javadoc du projet se trouve dans le repertoire doc/
