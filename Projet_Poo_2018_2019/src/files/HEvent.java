@@ -11,6 +11,7 @@ import java.io.IOException;
  */
 public class HEvent implements java.io.Serializable {
 
+	// Attributs de la classe
 	/**
 	 * Serial version UID for this class
 	 */
@@ -61,8 +62,12 @@ public class HEvent implements java.io.Serializable {
 	 * @see NullPointerException
 	 */
 	public HEvent(String[] str){
+		// On intialise les attribut à vide
 		summary = dateEnd = dateStart = location = description = "";
 		try {
+			/* On parcourt le tableu de string passe en argument
+			si ue ligne n'est ni null ni vide on on concatene chaque attribut 
+			avec le resultat de la methode initParameter()*/
 			for(String line: str) {
 				if(line != null && (line.isEmpty() == false)) {
 					summary+=initParameter(line, "SUMMARY:");
@@ -77,7 +82,9 @@ public class HEvent implements java.io.Serializable {
 			e.printStackTrace();
 		}
 	}
-
+	
+	/* Constructeur particulier qui initialise, par les mutateurs de la classe,
+	les attributs grace aux strings passes en parametre */
 	/**
 	 * 	Constructor HEvent
 	 * <p>When an object is builded with this constructor, the fields are initialized from five Strings given in parameter.</p> 
@@ -116,13 +123,16 @@ public class HEvent implements java.io.Serializable {
 		String[] parameterArray = {};
 		char[] dateArray = {};
 		int i = 0;
-
+		
 		if(line.startsWith(separator)) {
 			if (separator.startsWith("DT")) {
+				/* Si cette ligne correspond a une date, on supprime le separateur 
+				et on donne le reste de la ligne a parameter */
 				parameterArray = line.split(separator);
 				for (i = 0; i < parameterArray.length; i++) {
 					parameter += parameterArray[i];
 				}
+				// On modifie l'ordre des caracteres pour que la date soit de la forme JJ-MM-AAAA
 				dateArray = parameter.toCharArray();
 				dateArray[10] = dateArray[8];
 				dateArray[9] = dateArray[7];
@@ -133,6 +143,8 @@ public class HEvent implements java.io.Serializable {
 				parameter = new String(dateArray);// + " \n";	
 			}
 			else {
+				/* Si ce n'est pas une date on supprime le separateur 
+				et on donne le reste de la ligne a parameter */
 				parameterArray = line.split(separator);
 				for (i = 0; i < parameterArray.length; i++) {
 					parameter += parameterArray[i];
@@ -143,6 +155,7 @@ public class HEvent implements java.io.Serializable {
 
 	}
 
+	// Accesseur et mutateurs de la classe
 	/**
 	 * @return the dateStart
 	 */
@@ -233,6 +246,7 @@ public class HEvent implements java.io.Serializable {
 	 * 
 	 */
 	public String toHtmlEvent() {
+		// On retourne un string representant un fragment html pour un evenement
 		return "<div class=\\\"vevent\\\">  \n \t"
 				+ "<span class=\\\"summary\\\">" + getSummary() + "</span> \n \t"
 				+ "<span class=\\\"description\\\">" + getDescription() + "</span> \n \t"
