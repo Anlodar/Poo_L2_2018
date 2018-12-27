@@ -24,7 +24,7 @@ public class Cli  {
 			
 			System.out.println("-d folder : affiche les fichiers vcf et ics du dossier specifie");
 			System.out.println("-i file : Prend en entree file et affiche son contenu en mode console");
-			System.out.println("-i file -o file.ser : Prend en entr�e file et sauvegarde le contenu structur� dans un fichier file.ser");
+			System.out.println("-i file -o file.ser : Prend en entree file et sauvegarde le contenu structure dans un fichier file.ser");
 			System.out.println("-i file -h fragment.html : Prend file en entree et genere le fichier fragment.html");
 		}
 		else if(args[0].equals("-d")) {
