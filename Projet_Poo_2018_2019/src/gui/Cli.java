@@ -12,7 +12,18 @@ import files.HCalendar;
 import files.HCard;
 
 /**
- *@author Quentin
+ * <b> Cli is the Console interface of our project.</b>
+ * <p>With it you can 
+ * <ul>
+ * <li>Read and print a specified VCard or ICalendar</li>
+ * <li>Modify the specified Card </li>
+ * <li>Modify an Event in a specified Calendar </li>
+ * <li>Save a file with the serialization</li>
+ * <li>Build a HTML fragment of the selected file </li>
+ *</p>
+ *
+ * @author Quentin
+ *
  */
 public class Cli  {
 	@SuppressWarnings("unused")
