@@ -21,11 +21,14 @@ public class HCalendar implements java.io.Serializable {
 	 * implements java.io.Serializable 
 	 */
 	private static final long serialVersionUID = -5356372060144573590L;
+	
+	// Tableau (ArrayList) d'HEvent representant le calendrier
 	/**
 	 * ArrayList containing all the event of an calendar
 	 */
 	private ArrayList<HEvent> calendar;
 	
+	// On initialise le tableau et on appelle la methode create() 
 	/**
 	 * Constructor HCalendar
 	 * <p>When an object is build, the ArrayList representing the calendar is initialize
@@ -54,10 +57,14 @@ public class HCalendar implements java.io.Serializable {
 	 * @see FileNotFoundException
 	 */
 	public void create(File vCalendar) {
+		
 		BufferedReader reader = null;
+		
+		// Tableau de string
 		String str[] = new String[100];
 		
 		try {
+			// On cree un BufferedReader reader sur un fichier vCalendar 
 			reader = new BufferedReader(new FileReader(vCalendar));
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
@@ -66,15 +73,23 @@ public class HCalendar implements java.io.Serializable {
 		
 		
 		try {
+			// On associe a line la valeur de chaque ligne du fichier
 			String line = reader.readLine();
 			int i = 0;
+			
+			// Parcour du fichier jusqu'à sa fin
 			while(line != null) {
 				if (Objects.equals(line, "END:VEVENT") == false) {
-						str[i] = line;
-						line = reader.readLine();
-						i++;
-					}
-				else {					
+					/* Si la ligne n'indique pas la fin d'un evenement 
+					on ajoute la ligne dans la tableau de string déclarer plus tôt
+					et on continue a lire le fichier*/
+					str[i] = line;
+					line = reader.readLine();
+					i++;
+				}
+				else {
+					/* Sinon on ajoute un nouvel evenement (en utilisant le tableu de string)
+					puis on reinitialise le dit tableau et on continue a lire le fichier*/
 					calendar.add(new HEvent(str));
 					str = new String[str.length];
 					i = 0;
@@ -96,11 +111,15 @@ public class HCalendar implements java.io.Serializable {
 	 * @return an HEvent corresponding to this "summary" or an empty HEvent
 	 */
 	public HEvent searchEvent(String summary) {
+		/* On parcourt les evenements du calendrier (ArrayList) 
+		et si le summary de l'evenement en cour de verification correspond au string passe en arguments
+		on retourne l'evenement*/
 		for(HEvent event : calendar) {
 			if (event.getSummary().contentEquals(summary)) {
 				return event;
 			}
 		}
+		// Sinon on retourne null
 		return null;
 
 	}
@@ -121,8 +140,11 @@ public class HCalendar implements java.io.Serializable {
 	 * @see HCalendar#searchEvent(String)
 	 * @see ArrayList#set(int, Object)
 	 */
-	public void modify(String oldsummary, String newSummary, String newDateStart, String newDateEnd, String newLocation, String newDescription) {
+	public void modify(String oldsummary, String newSummary, String newDateStart,
+			   String newDateEnd, String newLocation, String newDescription) {
 		// TODO Auto-generated method stub
+		/*On recherche l'evenement a modifier et, si on le trouve, on modifie ses parametres un à un 
+		puis on ajoute cet evenement modifié à la place de l'ancient evenement*/
 		HEvent event = searchEvent(oldsummary);
 		if (event != null) {
 			int i = calendar.indexOf(event);
@@ -140,9 +162,13 @@ public class HCalendar implements java.io.Serializable {
 	 * @return an string array containing all the summaries of the calendar
 	 */
 	public String[] getAllSummaries() {
+		// On cree un tableau de string  
 		String str[] = new String[100];
 		int i =0;
 		for(HEvent event : calendar) {
+			/* On parcourt les evenements du calendrier
+			et on joute leur summary au tableau cree
+			puis tôt puis on retourne ce tableau */
 			str[i]=event.getSummary();
 			i++;
 		}
@@ -158,20 +184,27 @@ public class HCalendar implements java.io.Serializable {
 	 * @see IOException
 	 */
 	public void toHtmlCalendar(String fileName) {
+		// On cree un fichier html
 		File file = new File(fileName);
 		FileWriter writer = null;
+		// String contnenant le fragment html
 		String str = "<div class=\\\"vcalendar\\\">  \n";
 		try {
+			// On cree un FileWriter sur le fichier html cree
 			writer = new FileWriter(file);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		try {
+			/* On parcour les evenements et on concatene le le string
+			et les toHtmlEvent() de chaque evenement */
 			for(HEvent event : calendar) {
 				str += event.toHtmlEvent();
 			}
 			str += "</div>";
+			
+			// On ecrit le fragments html dans le fichier puis on ferme le flux
 			writer.write(str);
 			writer.close();
 		}catch (IOException e) {
@@ -185,7 +218,10 @@ public class HCalendar implements java.io.Serializable {
 	 */
 	@Override
 	public String toString() {
+		// On cree le string a retourner
 		String str = "Calendrier : \n************\n\n";
+		/* On parcourt les evenements du calendrier 
+		et on concatene leur toString() avec le String cree plus tôt, que l'on retourne*/
 		for(HEvent event : calendar) {
 			str+= event.toString();
 		}
