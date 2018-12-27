@@ -1,6 +1,3 @@
-/**
- * 
- */
 package files;
 
 import java.io.BufferedReader;
@@ -11,6 +8,21 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
+ *<b>This class represents an visit card build from a VCF file</b>
+ *<p>
+ *An event is characterized by :
+ *<ul>
+ *<li>A name</li>
+ *<li>Two phone numbers (personnal and office)</li>
+ *<li>Two adress (personnal and office)</li>
+ *<li>An email</li>
+ *</ul>
+ *</p>
+ *<p>
+ *All these characteristics can be changed. 
+ *Finally, a html fragment can be created, and information can be displayed.
+ *</p>
+ *
  * @author Yael
  *
  */
