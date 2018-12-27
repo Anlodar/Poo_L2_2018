@@ -1,4 +1,4 @@
-package gui;
+package ihm;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
