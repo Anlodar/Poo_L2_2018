@@ -16,6 +16,8 @@ import java.io.IOException;
  */
 public class HCard implements java.io.Serializable {
 
+	// Attributs de la classe 
+	
 	/**
 	 * Serial version UID for this class
 	 */
@@ -69,6 +71,8 @@ public class HCard implements java.io.Serializable {
 	 */
 	private String mail;
 
+	/* On construit l'objet en intialisant chaque parametre
+	qu'on concatene avec le resultat de la methode intiParameter() */
 	/**
 	 * 	Constructor HCard
 	 * <p>When an object is builded, all fields are initialized by using initParemeter method.</p>
@@ -107,13 +111,19 @@ public class HCard implements java.io.Serializable {
 		int i = 0;
 		BufferedReader bf = null;
 		try {
+			// On cree un BufferedReader sur le ficher vCard passe en parametre
 			bf = new BufferedReader(new FileReader(fileNameVCard));
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		try {
+			// On parcourt l'integralite du fichier ligne par ligne
 			while ((str = bf.readLine()) != null) {
+				/* Si la ligne commence par le separateur passe en parametre
+				on supprime le separateur grace a la methode split()
+				et on donne le reste de la ligne a parameter
+				*/
 				if (str.startsWith(separator)) {
 					parameterArray = str.split(separator);
 					for (i=1 ; i < parameterArray.length; i++) {
@@ -121,6 +131,7 @@ public class HCard implements java.io.Serializable {
 					}
 				}
 			}
+			// On ferme le flux
 			bf.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -132,10 +143,11 @@ public class HCard implements java.io.Serializable {
 				e.printStackTrace();
 			}
 		}
-
+		// On retourne le parametre
 		return parameter;
 	}
 
+	// Methode qui remplace tous les ";" d'un string par ", "
 	/**
 	 * Remove all semicolon from a String
 	 * 
@@ -147,7 +159,24 @@ public class HCard implements java.io.Serializable {
 
 	}
 
-	public void modify(String name, String adressHome, String adressWork, String numberHome, String numberWork, String mail) {
+	// Modifie, grace au mutateurs de la classe, les attributs par les strings passes en parametre
+	/**
+	 * Modify all the fields with the given parameter 
+	 * @param name new name of the object
+	 * @param adressHome new adressHome of the object
+	 * @param adressWork new adressWork of the object
+	 * @param numberHome new numberHome of the object
+	 * @param numberWork new numberWork of the object
+	 * @param mail new mail of the object
+	 * @see HCard#setAdressHome(String)
+	 * @see HCard#setAdressWork(String)
+	 * @see HCard#setMail(String)
+	 * @see HCard#setName(String)
+	 * @see HCard#setNumberHome(String)
+	 * @see HCard#setNumberWork(String)
+	 */
+	public void modify(String name, String adressHome, String adressWork,
+			   String numberHome, String numberWork, String mail) {
 		setAdressHome(adressHome);
 		setAdressWork(adressWork);
 		setMail(mail);
@@ -156,6 +185,7 @@ public class HCard implements java.io.Serializable {
 		setNumberWork(numberWork);
 	}
 
+	// Mutateurs et accesseurs des attributs de la classe
 	/**
 	 * @return the name
 	 */
@@ -283,21 +313,25 @@ public class HCard implements java.io.Serializable {
 	 * 
 	 */
 	public void toHtml(String fileName) {
+		// On cree un fichier html nomme d'apres le string passe en parametre
 		File file = new File(fileName);
 		FileWriter writer = null;
 		String[] strAdrH;
 		String[] strAdrW;
 		String str = null;
 
+		// On separe les addresse en des tableau de string pour acceder a chaqu'un de leur composant
 		strAdrH = getAdressHome().split(", ");
 		strAdrW = getAdressWork().split(", ");
 		try {
+			// On cree un FileWriter sur le fichier html
 			writer = new FileWriter(file);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		try {
+			// On concatene le string
 			str += "<div class=\\\"vcard\\\"> \n \t"
 					+ "<span class=\\\"fn\\\">" + getName() + "</span> \n \t"
 					+ "<div class=\\\"adr\\\"> \n \t \t"
@@ -327,6 +361,8 @@ public class HCard implements java.io.Serializable {
 					+ "</div> \n \t"
 
 					+ "<a class=\\\"email\\\" href=\\\"mailto:" + getMail() + "\\\">@</a> \n </div>";
+			
+			// On ecrit le string sur le fichier et on ferme le flux
 			writer.write(str);
 			writer.close();
 		} catch (IOException e) {
