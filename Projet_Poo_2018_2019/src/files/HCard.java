@@ -20,7 +20,7 @@ import java.io.IOException;
  *</p>
  *<p>
  *All these characteristics can be changed. 
- *Finally, a html fragment can be created, and information can be displayed.
+ *Finally, a html fragment can be created, and its informations can be displayed.
  *</p>
  *
  * @author Yael
