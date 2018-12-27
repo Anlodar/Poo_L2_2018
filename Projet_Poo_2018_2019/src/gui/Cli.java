@@ -11,6 +11,9 @@ import java.io.ObjectOutputStream;
 import files.HCalendar;
 import files.HCard;
 
+/**
+ *@author Quentin
+ */
 public class Cli  {
 	@SuppressWarnings("unused")
 	private static String type;
