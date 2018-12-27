@@ -1,11 +1,24 @@
-/**
- * 
- */
 package files;
 
 import java.io.IOException;
 
 /**
+ *<b>This class represents an event build from a ICS file</b>
+ *<p>
+ *An event is characterized by :
+ *<ul>
+ *<li>A summary</li>
+ *<li>A description</li>
+ *<li>A start date</li>
+ *<li>An end date</li>
+ *<li>A location</li>
+ *</ul>
+ *</p>
+ *<p>
+ *All these characteristics can be changed. 
+ *Finally, a html fragment can be created.
+ *</p>
+ *
  * @author Yael
  *
  */
