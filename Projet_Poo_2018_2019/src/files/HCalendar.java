@@ -13,6 +13,12 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 /**
+ *<b>This class represents a calendar build from a ICS file</b>
+ *<p>
+ *A calendar is characterized by an array of events, that can be modified. 
+ *Finally, a html fragment containing all event's htm fragment can be created or calendar's information can be displayed.
+ *</p>
+ *
  * @author Yael
  */
 public class HCalendar implements java.io.Serializable {
