@@ -7,14 +7,16 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Objects;
 
 import files.HCalendar;
 import files.HCard;
 
 public class Cli  {
+	@SuppressWarnings("unused")
 	private static String type;
+	@SuppressWarnings("unused")
 	private HCard card;
+	@SuppressWarnings("unused")
 	private HCalendar calendar;
 	
 	public static void main(String[] args) {
@@ -43,7 +45,7 @@ public class Cli  {
 			if(file.isFile()) {
 				type = "VCF";
 				HCard card = new HCard(file);
-				if(args[2].equals(null)) {
+				if(args.length == 2) {
 					System.out.println(card.toString());
 				}
 				else if(args[2].equals("-o")) {
@@ -52,6 +54,7 @@ public class Cli  {
 				}
 				else if(args[2].equals("-h")) {
 					card.toHtml(card.getName().replaceAll(" ", "") + ".html");
+					System.out.println("Le fragment html pour la carte de visite a bien ete cree");
 				}
 			}
 		}
@@ -60,7 +63,7 @@ public class Cli  {
 			if(file.isFile()) {
 				type = "ICS";
 				HCalendar calendar = new HCalendar(file);
-				if(args[2].equals(null)) {
+				if(args.length == 2) {
 					System.out.println(calendar.toString());
 				}
 				else if(args[2].equals("-o")) {
@@ -69,6 +72,7 @@ public class Cli  {
 				}
 				else if(args[2].equals("-h")) {
 					calendar.toHtmlCalendar("calendar.html");
+					System.out.println("Le fragment html pour le calendrier a bien ete cree");
 				}
 			}
 		}
@@ -133,7 +137,7 @@ public class Cli  {
 		try {
 			ObjectOutputStream oout = new ObjectOutputStream(new FileOutputStream(fileName));
 			oout.writeObject(calendar);
-			System.out.println();
+			System.out.println("Le calendrier a ete serialise");
 			oout.close();
 		} catch (IOException ioe) {
 			ioe.printStackTrace();

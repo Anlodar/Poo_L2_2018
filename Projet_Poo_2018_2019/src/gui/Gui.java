@@ -25,7 +25,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import files.HCalendar;
 import files.HCard;
-import files.HEvent;
 
 /**
  * 
@@ -110,7 +109,7 @@ public class Gui implements ActionListener{
 		adressHome = new JTextField("Adress Home");
 
 		// Initialize the ComboBox and the scrollPane who contains the textarea //
-		box = new JComboBox();
+		box = new JComboBox<String>();
 		scroll = new JScrollPane(textarea);
 
 		// Initialize Box layouts for JTextpane and globalpane //
@@ -370,7 +369,7 @@ public class Gui implements ActionListener{
 	/**
 	 * @return splitPane the entire GUI
 	 */
-	public static JSplitPane getSplitPane() {
+	public JSplitPane getSplitPane() {
 		return splitPane;
 	}
 	
@@ -378,7 +377,6 @@ public class Gui implements ActionListener{
         try {
                 ObjectOutputStream oout = new ObjectOutputStream(new FileOutputStream(fileName));
                 oout.writeObject(card);
-                System.out.println(card.getName() + " a ete serialise");
                 oout.close();
         } catch (IOException ioe) {
                 ioe.printStackTrace();
@@ -390,7 +388,6 @@ public class Gui implements ActionListener{
 		try {
 			ObjectInputStream oin = new ObjectInputStream(new FileInputStream(fileName));
 			card = (HCard) oin.readObject();
-			System.out.println(card.getName() + " a ete deserialise");
 			oin.close();
 		} catch (ClassNotFoundException nfe) {
 			nfe.printStackTrace();
